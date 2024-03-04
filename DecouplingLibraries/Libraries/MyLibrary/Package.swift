@@ -10,6 +10,9 @@ let package = Package(
         .library(
             name: "MyLibrary",
             targets: ["MyLibrary"]),
+        .library(
+            name: "MyLibraryImplementations",
+            targets: ["MyLibraryImplementations"])
     ],
     dependencies: [
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON", branch: "master")
@@ -19,6 +22,10 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "MyLibrary",
+            dependencies: []
+        ),
+        .target(
+            name: "MyLibraryImplementations",
             dependencies: ["SwiftyJSON"]
         ),
         .testTarget(
