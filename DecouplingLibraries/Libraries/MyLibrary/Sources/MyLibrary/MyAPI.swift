@@ -9,6 +9,4 @@ import Foundation
 
 public protocol MyAPI {
     func decode(string: String) -> [String: Any]?
-//    func eCommerceName() -> String
-    func ordersList() -> [String]
 }
