@@ -16,24 +16,22 @@ car.doAndPrint {
 
 try car.doAndPrint {
     print("Accelerate")
-    try $0.accelerate()
+    try $0.accelerate(delta: 10)
 }
 
 try car.doAndPrint {
     print("Accelerate")
-    try $0.accelerate()
+    try $0.accelerate(delta: 10)
 }
 
 car.doAndPrint {
     print("Steer left")
-    $0.steer(direction: .left)
+    $0.steer(direction: .left, delta: 10)
 }
 
 car.doAndPrint {
     print("Brake 6 times")
-    for _ in 0..<6 {
-        $0.brake()
-    }
+    $0.brake(intensity: 6)
 }
 
 try car.doAndPrint {
