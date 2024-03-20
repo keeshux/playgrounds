@@ -7,7 +7,11 @@
 
 import Foundation
 
-public struct Brake {
+public protocol BrakeProtocol {
+    var speedVariation: Int { get }
+}
+
+public struct Brake: BrakeProtocol {
     public let speedVariation: Int
 
     public init(speedVariation: Int) {

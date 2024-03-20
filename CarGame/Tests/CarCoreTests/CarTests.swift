@@ -11,13 +11,13 @@ import XCTest
 
 final class CarTests: XCTestCase {
     func test_givenStoppedCar_whenStart_thenIsStarted() {
-        var sut = Car()
+        var sut = newCar()
         sut.start()
         XCTAssertTrue(sut.isStarted)
     }
 
     func test_givenStoppedCar_whenStop_thenIsStopped() throws {
-        var sut = Car()
+        var sut = newCar()
         sut.start()
         XCTAssertTrue(sut.isStarted)
         try sut.stop()
@@ -25,14 +25,14 @@ final class CarTests: XCTestCase {
     }
 
     func test_givenMovingCar_whenStop_thenFails() throws {
-        var sut = Car()
+        var sut = newCar()
         sut.start()
         try sut.accelerate(delta: 10)
         XCTAssertThrowsError(try sut.stop())
     }
 
     func test_givenStartedCar_whenAccelerate_thenSpeedIncreases() throws {
-        var sut = Car()
+        var sut = newCar()
         sut.start()
         XCTAssertTrue(sut.isStarted) // out of scope
 
@@ -43,7 +43,7 @@ final class CarTests: XCTestCase {
     }
 
     func test_givenStartedCar_whenBrake_thenSpeedDecreases() throws {
-        var sut = Car()
+        var sut = newCar()
         sut.start()
         XCTAssertTrue(sut.isStarted) // out of scope
 
@@ -59,12 +59,12 @@ final class CarTests: XCTestCase {
     }
 
     func test_givenStoppedCar_whenAccelerate_thenFails() throws {
-        var sut = Car()
+        var sut = newCar()
         XCTAssertThrowsError(try sut.accelerate(delta: 10))
     }
 
     func test_givenCar_whenSteer_thenAngleIsAltered() throws {
-        var sut = Car()
+        var sut = newCar()
 
         sut.steer(direction: .left, delta: 10)
         XCTAssertTrue(sut.isSteering)
@@ -81,5 +81,11 @@ final class CarTests: XCTestCase {
         sut.steer(direction: .right, delta: 10)
         XCTAssertFalse(sut.isSteering)
         XCTAssertEqual(sut.currentAngle(), 0)
+    }
+}
+
+private extension CarTests {
+    func newCar() -> Car {
+        Car(brakeSpeedVariation: 10)
     }
 }
