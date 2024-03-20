@@ -5,29 +5,10 @@
 //  Created by Davide De Rosa on 3/20/24.
 //
 
+import CarCore
 import Foundation
 
-public protocol WheelProtocol {
-    var canSteer: Bool { get }
-
-    var speed: Int { get }
-
-    var angle: Int { get }
-
-    mutating func doAccelerate(delta: Int)
-
-    mutating func doBrake(with brake: BrakeProtocol, intensity: Int)
-
-    mutating func doSteer(direction: Wheel.Direction, delta: Int)
-}
-
 public struct Wheel: WheelProtocol {
-    public enum Direction {
-        case left
-
-        case right
-    }
-
     public let canSteer: Bool
 
     public private(set) var speed: Int
@@ -50,7 +31,7 @@ public struct Wheel: WheelProtocol {
         speed = max(0, speed - intensity * brake.speedVariation)
     }
 
-    public mutating func doSteer(direction: Direction, delta: Int) {
+    public mutating func doSteer(direction: WheelDirection, delta: Int) {
         guard canSteer else {
             return
         }
