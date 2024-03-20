@@ -10,7 +10,7 @@ import Foundation
 public struct Brake {
     public let speedVariation: Int
 
-    public init() {
-        speedVariation = 10
+    public init(speedVariation: Int) {
+        self.speedVariation = speedVariation
     }
 }
