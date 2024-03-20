@@ -26,26 +26,26 @@ public struct Wheel {
         angle = 0
     }
 
-    public mutating func doAccelerate() {
-        speed += 10
+    public mutating func doAccelerate(delta: Int) {
+        speed += delta
     }
 
-    public mutating func doBrake(with brake: Brake) {
+    public mutating func doBrake(with brake: Brake, intensity: Int) {
 
         // do not go past 0
-        speed = max(0, speed - brake.speedVariation)
+        speed = max(0, speed - intensity * brake.speedVariation)
     }
 
-    public mutating func doSteer(direction: Direction) {
+    public mutating func doSteer(direction: Direction, delta: Int) {
         guard canSteer else {
             return
         }
         switch direction {
         case .left:
-            angle -= 10
+            angle -= abs(delta)
 
         case .right:
-            angle += 10
+            angle += abs(delta)
         }
     }
 }

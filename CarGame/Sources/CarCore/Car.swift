@@ -25,7 +25,7 @@ public struct Car {
     public private(set) var wheels: [Wheel]
 
     public init() {
-        brakeComponent = Brake()
+        brakeComponent = Brake(speedVariation: 10)
         engine = Engine()
         wheels = (0..<Self.numberOfWheels)
             .map {
@@ -86,19 +86,19 @@ public struct Car {
             throw CarError.carIsStopped
         }
         wheels = wheels.copy {
-            $0.doAccelerate()
+            $0.doAccelerate(delta: 10)
         }
     }
 
     public mutating func brake() {
         wheels = wheels.copy {
-            $0.doBrake(with: brakeComponent)
+            $0.doBrake(with: brakeComponent, intensity: 1)
         }
     }
 
     public mutating func steer(direction: Wheel.Direction) {
         wheels = wheels.copy {
-            $0.doSteer(direction: direction)
+            $0.doSteer(direction: direction, delta: 10)
         }
     }
 }
