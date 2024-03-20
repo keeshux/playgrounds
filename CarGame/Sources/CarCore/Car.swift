@@ -96,7 +96,7 @@ public struct Car {
         }
     }
 
-    public mutating func steer(direction: Wheel.Direction, delta: Int) {
+    public mutating func steer(direction: WheelDirection, delta: Int) {
         wheels = wheels.copy {
             $0.doSteer(direction: direction, delta: delta)
         }

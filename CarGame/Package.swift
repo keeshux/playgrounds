@@ -6,14 +6,20 @@ import PackageDescription
 let package = Package(
     name: "CarGame",
     targets: [
-        .target(name: "CarCore"),
-        .testTarget(
-            name: "CarCoreTests",
+        .target(
+            name: "CarCore"
+        ),
+        .target(
+            name: "SimpleCar",
             dependencies: ["CarCore"]
+        ),
+        .testTarget(
+            name: "SimpleCarTests",
+            dependencies: ["SimpleCar"]
         ),
         .executableTarget(
             name: "CarGame",
-            dependencies: ["CarCore"]
+            dependencies: ["SimpleCar"]
         )
     ]
 )

@@ -2,8 +2,9 @@
 // https://docs.swift.org/swift-book
 
 import CarCore
+import SimpleCar
 
-var car = Car(brakeSpeedVariation: 10)
+var car = Car.simpleCar(brakeSpeedVariation: 10)
 
 car.doAndPrint { _ in
     print("Create car")

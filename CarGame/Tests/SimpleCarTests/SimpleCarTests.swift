@@ -7,9 +7,10 @@
 
 import CarCore
 import Foundation
+import SimpleCar
 import XCTest
 
-final class CarTests: XCTestCase {
+final class SimpleCarTests: XCTestCase {
     func test_givenStoppedCar_whenStart_thenIsStarted() {
         var sut = newCar()
         sut.start()
@@ -84,8 +85,8 @@ final class CarTests: XCTestCase {
     }
 }
 
-private extension CarTests {
+private extension SimpleCarTests {
     func newCar() -> Car {
-        Car(brakeSpeedVariation: 10)
+        Car.simpleCar(brakeSpeedVariation: 10)
     }
 }
