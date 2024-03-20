@@ -27,7 +27,7 @@ final class CarTests: XCTestCase {
     func test_givenMovingCar_whenStop_thenFails() throws {
         var sut = Car()
         sut.start()
-        try sut.accelerate()
+        try sut.accelerate(delta: 10)
         XCTAssertThrowsError(try sut.stop())
     }
 
@@ -36,9 +36,9 @@ final class CarTests: XCTestCase {
         sut.start()
         XCTAssertTrue(sut.isStarted) // out of scope
 
-        try sut.accelerate()
+        try sut.accelerate(delta: 10)
         XCTAssertEqual(sut.currentSpeed(), 10)
-        try sut.accelerate()
+        try sut.accelerate(delta: 10)
         XCTAssertEqual(sut.currentSpeed(), 20)
     }
 
@@ -47,38 +47,38 @@ final class CarTests: XCTestCase {
         sut.start()
         XCTAssertTrue(sut.isStarted) // out of scope
 
-        try sut.accelerate()
-        try sut.accelerate()
-        try sut.accelerate()
+        try sut.accelerate(delta: 10)
+        try sut.accelerate(delta: 10)
+        try sut.accelerate(delta: 10)
         XCTAssertEqual(sut.currentSpeed(), 30) // out of scope
 
-        sut.brake()
+        sut.brake(intensity: 1)
         XCTAssertEqual(sut.currentSpeed(), 20)
-        sut.brake()
+        sut.brake(intensity: 1)
         XCTAssertEqual(sut.currentSpeed(), 10)
     }
 
     func test_givenStoppedCar_whenAccelerate_thenFails() throws {
         var sut = Car()
-        XCTAssertThrowsError(try sut.accelerate())
+        XCTAssertThrowsError(try sut.accelerate(delta: 10))
     }
 
     func test_givenCar_whenSteer_thenAngleIsAltered() throws {
         var sut = Car()
 
-        sut.steer(direction: .left)
+        sut.steer(direction: .left, delta: 10)
         XCTAssertTrue(sut.isSteering)
         XCTAssertEqual(sut.currentAngle(), -10)
 
-        sut.steer(direction: .left)
+        sut.steer(direction: .left, delta: 10)
         XCTAssertTrue(sut.isSteering)
         XCTAssertEqual(sut.currentAngle(), -20)
 
-        sut.steer(direction: .right)
+        sut.steer(direction: .right, delta: 10)
         XCTAssertTrue(sut.isSteering)
         XCTAssertEqual(sut.currentAngle(), -10)
 
-        sut.steer(direction: .right)
+        sut.steer(direction: .right, delta: 10)
         XCTAssertFalse(sut.isSteering)
         XCTAssertEqual(sut.currentAngle(), 0)
     }

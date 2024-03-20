@@ -81,24 +81,24 @@ public struct Car {
         return differentAngles.first ?? 0
     }
 
-    public mutating func accelerate() throws {
+    public mutating func accelerate(delta: Int) throws {
         guard engine.isOn else {
             throw CarError.carIsStopped
         }
         wheels = wheels.copy {
-            $0.doAccelerate(delta: 10)
+            $0.doAccelerate(delta: delta)
         }
     }
 
-    public mutating func brake() {
+    public mutating func brake(intensity: Int) {
         wheels = wheels.copy {
-            $0.doBrake(with: brakeComponent, intensity: 1)
+            $0.doBrake(with: brakeComponent, intensity: intensity)
         }
     }
 
-    public mutating func steer(direction: Wheel.Direction) {
+    public mutating func steer(direction: Wheel.Direction, delta: Int) {
         wheels = wheels.copy {
-            $0.doSteer(direction: direction, delta: 10)
+            $0.doSteer(direction: direction, delta: delta)
         }
     }
 }
