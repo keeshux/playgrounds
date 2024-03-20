@@ -7,7 +7,15 @@
 
 import Foundation
 
-public struct Engine {
+public protocol EngineProtocol {
+    var isOn: Bool { get }
+
+    mutating func start()
+
+    mutating func stop()
+}
+
+public struct Engine: EngineProtocol {
     public private(set) var isOn: Bool
 
     public init() {

@@ -3,7 +3,7 @@
 
 import CarCore
 
-var car = Car()
+var car = Car(brakeSpeedVariation: 10)
 
 car.doAndPrint { _ in
     print("Create car")

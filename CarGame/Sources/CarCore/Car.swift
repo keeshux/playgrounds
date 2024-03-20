@@ -18,20 +18,20 @@ public struct Car {
 
     private static let numberOfFrontWheels = 2
 
-    private let brakeComponent: Brake
+    private let brakeComponent: BrakeProtocol
 
-    private var engine: Engine
+    private var engine: EngineProtocol
 
-    public private(set) var wheels: [Wheel]
+    private var wheels: [WheelProtocol]
 
-    public init() {
-        brakeComponent = Brake(speedVariation: 10)
-        engine = Engine()
-        wheels = (0..<Self.numberOfWheels)
-            .map {
-                // only front wheels can steer
-                Wheel(canSteer: $0 < Self.numberOfFrontWheels)
-            }
+    public init(brake: BrakeProtocol, engine: EngineProtocol, wheels: [WheelProtocol]) {
+        precondition(wheels.count == Self.numberOfWheels)
+        precondition(wheels.prefix(Self.numberOfFrontWheels).allSatisfy(\.canSteer))
+        precondition(wheels.suffix(Self.numberOfFrontWheels).allSatisfy { !$0.canSteer })
+
+        brakeComponent = brake
+        self.engine = engine
+        self.wheels = wheels
     }
 
     public mutating func start() {

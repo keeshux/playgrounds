@@ -7,7 +7,21 @@
 
 import Foundation
 
-public struct Wheel {
+public protocol WheelProtocol {
+    var canSteer: Bool { get }
+
+    var speed: Int { get }
+
+    var angle: Int { get }
+
+    mutating func doAccelerate(delta: Int)
+
+    mutating func doBrake(with brake: BrakeProtocol, intensity: Int)
+
+    mutating func doSteer(direction: Wheel.Direction, delta: Int)
+}
+
+public struct Wheel: WheelProtocol {
     public enum Direction {
         case left
 
@@ -30,7 +44,7 @@ public struct Wheel {
         speed += delta
     }
 
-    public mutating func doBrake(with brake: Brake, intensity: Int) {
+    public mutating func doBrake(with brake: BrakeProtocol, intensity: Int) {
 
         // do not go past 0
         speed = max(0, speed - intensity * brake.speedVariation)
