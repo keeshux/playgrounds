@@ -10,6 +10,8 @@ struct DoSomethingView: View {
 
     @State private var someResult: SomeResultState = .void
 
+    @State private var loginText = ""
+
     @State private var isPending = false
 
     init(viewModel: DoSomethingViewModel) {
@@ -26,15 +28,28 @@ struct DoSomethingView: View {
             }
             .disabled(isPending)
             Text(resultMessage)
+            Spacer()
+            Button(loginText, action: toggleLogin)
         }
         .onReceive(resultPublisher) {
             someResult = $0
+        }
+        .onReceive(SessionManager.shared.isLoggedPublisher) {
+            loginText = $0 ? "Log out" : "Log in"
         }
         .onReceive(isPendingPublisher) {
             isPending = $0
         }
         .frame(width: 400, height: 150)
         .padding()
+    }
+
+    func toggleLogin() {
+        if SessionManager.shared.isLogged {
+            SessionManager.shared.logOut()
+        } else {
+            SessionManager.shared.logIn()
+        }
     }
 
     var resultMessage: String {
@@ -57,6 +72,6 @@ struct DoSomethingView: View {
 #Preview {
     DoSomethingView(viewModel: {
         let useCase = DoSomethingUseCase()
-        return ImperativeDoSomethingViewModel(useCase: useCase)
+        return FunctionalDoSomethingViewModel(useCase: useCase)
     }())
 }

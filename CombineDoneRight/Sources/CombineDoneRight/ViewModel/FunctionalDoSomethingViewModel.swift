@@ -30,18 +30,23 @@ final class FunctionalDoSomethingViewModel: DoSomethingViewModel {
     }
 
     var resultPublisher: AnyPublisher<SomeResultState, Never> {
-        useCaseInput
+        Publishers.CombineLatest(useCaseInput, SessionManager.shared.isLoggedPublisher)
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.isPendingSubject.send(true)
             })
-            .flatMap { input in
-                self.useCase.execute(with: input)
-            }
-            .map { output in
-                .success(result: output.result)
-            }
-            .catch { error in
-                Just(.failure(error: error))
+            .flatMap { input, isLoggedIn in
+                guard isLoggedIn else {
+                    return Just(SomeResultState.success(result: "log in to get result"))
+                        .eraseToAnyPublisher()
+                }
+                return self.useCase.execute(with: input)
+                    .map { output in
+                        .success(result: output.result)
+                    }
+                    .catch { error in
+                        Just(.failure(error: error))
+                    }
+                    .eraseToAnyPublisher()
             }
             .handleEvents(receiveOutput: { [weak self] _ in
                 self?.isPendingSubject.send(false)
